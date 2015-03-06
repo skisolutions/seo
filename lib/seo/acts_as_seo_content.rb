@@ -14,11 +14,11 @@ module Seo
           Seo::ActsAsSeoContent.registered_models << self.to_s
         end
         
-      after_destroy -> do
-        return unless Seo::ActsAsSeoContent.registered_models.include?(self.class.to_s)
-        MetaContent.where(resource_type: self.class.to_s, resource_id: self.id).
-          delete_all
-      end
+        after_destroy -> do
+          return unless Seo::ActsAsSeoContent.registered_models.include?(self.class.to_s)
+          MetaContent.where(resource_type: self.class.to_s, resource_id: self.id).
+            delete_all
+        end
 
         cattr_accessor :seo_resource_title
         self.seo_resource_title = (options[:seo_resource_title] || :title)
